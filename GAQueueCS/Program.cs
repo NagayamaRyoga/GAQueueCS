@@ -10,6 +10,7 @@ namespace GAQueueCS
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("hello");
         }
     }
 }
