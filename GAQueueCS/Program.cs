@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GAQueue
+namespace GAQueueCS
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("hello");
+			Individual indiv = new Individual(10);
+            Console.WriteLine(indiv);
         }
     }
 }
