@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -10,10 +10,10 @@ namespace GAQueueCS
 	class Individual
 	{
 		public Gene Gene;
-		public double? Fitness;
+		public double? Fitness = null;
 		public double? RawFitness = null;
 		public uint BirthYear = 0;
-		public Population Parents;
+		public Population Parents = new Population();
 
 		public Individual(int size, uint birthYear = 0)
 			: this(new Gene(), null, birthYear)
