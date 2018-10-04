@@ -8,13 +8,12 @@ namespace GAQueueCS
     {
         static void Main(string[] args)
         {
-			var gaqsys = new GAQSystem(5, evaluator_Onemax, 0, 5, (IEnumerable<Individual> arg) => { return arg; });
-			gaqsys.Step();
+			var system = new GAQSystem(5, Problem.Onemax.Evaluator, 0, 5, (IEnumerable<Individual> arg) => { return arg; });
+			system.Step(5);
+			foreach (var i in system.History)
+			{
+				Console.WriteLine(i);
+			}
         }
-
-		static double evaluator_Onemax(List<double> arg)
-		{
-			return arg.Sum();
-		}
 	}
 }
