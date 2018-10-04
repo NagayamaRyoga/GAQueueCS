@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -15,10 +15,14 @@ namespace GAQueueCS
 		public uint BirthYear = 0;
 		public Population Parents = new Population();
 
-		public Individual(int size, uint birthYear = 0)
+		public Individual(int size, uint birthYear = 0, int? seed = null)
 			: this(new Gene(), null, birthYear)
 		{
-			var rand = new Random();
+			Random rand = new Random();
+			if (seed.HasValue)
+			{
+				rand = new Random(seed.Value);
+			}
 			Gene = Enumerable.Repeat(0.0, size).Select(_ => rand.NextDouble()).ToList();
 		}
 
@@ -31,7 +35,7 @@ namespace GAQueueCS
 
 		public override string ToString()
 		{
-			var ret = string.Format("{0}/{1} ", Fitness, RawFitness);
+			var ret = string.Format("{0:F3}/{1:F3} ", Fitness, RawFitness);
 			Gene.ForEach(g => ret += string.Format("{0:F3}, ", g));
 			return ret;
 		}
