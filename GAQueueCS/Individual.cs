@@ -16,13 +16,10 @@ namespace GAQueueCS
 		public Population Parents;
 
 		public Individual(int size, uint birthYear = 0)
-			: this(Enumerable.Repeat(0.0, size).ToList(), null, birthYear)
+			: this(new Gene(), null, birthYear)
 		{
 			var rand = new Random();
-			for (var i = 0; i < Gene.Count; i++)
-			{
-				Gene[i] = rand.NextDouble();
-			}
+			Gene = Enumerable.Repeat(0.0, size).Select(_ => rand.NextDouble()).ToList();
 		}
 
 		public Individual(Gene gene, double? fitness, uint birthYear = 0)
