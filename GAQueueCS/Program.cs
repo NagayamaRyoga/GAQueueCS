@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GAQueueCS
@@ -7,8 +8,13 @@ namespace GAQueueCS
     {
         static void Main(string[] args)
         {
-			Individual indiv = new Individual(10);
-            Console.WriteLine(indiv);
+			var gaqsys = new GAQSystem(5, evaluator_Onemax, 0, 5, (IEnumerable<Individual> arg) => { return arg; });
+			gaqsys.Step();
         }
-    }
+
+		static double evaluator_Onemax(List<double> arg)
+		{
+			return arg.Sum();
+		}
+	}
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,15 +36,25 @@ namespace GAQueueCS
 		 * 		- mutate    function
  		 */
 
-		public List<Individual> History;
-		public Queue<Individual> Queue;
+		public List<Individual> History = new List<Individual>();
+		public Queue<Individual> Queue = new Queue<Individual>();
 		private uint age;
 		private int geneSize;
 		public Evaluator Evaluator;
 		public int MinQueueSize;
 		public Operator Op;
 
-		GAQSystem(int geneSize,
+		public GAQSystem(int geneSize,
+				  Evaluator evaluator,
+				  int minQueueSize,
+				  int initQueueSize,
+				  Operator op)
+			: this(geneSize, evaluator, minQueueSize, () =>
+				{ return Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize)); }, op)
+		{
+		}
+
+		public GAQSystem(int geneSize,
 				  Evaluator evaluator,
 				  int minQueueSize,
 				  Initializer initializer,
@@ -54,6 +64,11 @@ namespace GAQueueCS
 			Evaluator = evaluator;
 			MinQueueSize = minQueueSize;
 			Op = op;
+			
+			foreach (var indiv in initializer())
+			{
+				Queue.Enqueue(indiv);
+			}
 		}
 
 		public void AddHistory(Individual indiv) { History.Add(indiv); }
