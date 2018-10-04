@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GAQueueCS
 {
-	delegate List<Individual> Operator(List<Individual> arg);
+	delegate IEnumerable<Individual> Operator(IEnumerable<Individual> arg);
 	delegate double Evaluator(List<double> arg);
-	delegate void Initializer();
+	delegate IEnumerable<Individual> Initializer();
 
 	class GAQSystem
 	{
