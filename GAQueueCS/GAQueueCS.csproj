@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparator.cs" />
     <Compile Include="GAQSystem.cs" />
     <Compile Include="Gene.cs" />
     <Compile Include="Individual.cs" />
