@@ -5,7 +5,6 @@ using System.Linq;
 namespace GAQueueCS
 {
 	delegate IEnumerable<Individual> Operator(IEnumerable<Individual> arg);
-	delegate IEnumerable<Individual> Initializer();
 
 	class GAQSystem
 	{
@@ -48,18 +47,14 @@ namespace GAQueueCS
 				  int minQueueSize,
 				  int initQueueSize,
 				  Operator op)
-			: this(geneSize, problem, minQueueSize, () =>
-				{
-					Random rand = new Random();
-					return Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize, 0, rand));
-				}, op)
+			: this(geneSize, problem, minQueueSize, Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize, 0, new Random())), op)
 		{
 		}
 
 		public GAQSystem(int geneSize,
 				  IProblem problem,
 				  int minQueueSize,
-				  Initializer initializer,
+				  IEnumerable<Individual> firstGeneration,
 				  Operator op)
 		{
 			this.geneSize = geneSize;
@@ -67,7 +62,7 @@ namespace GAQueueCS
 			MinQueueSize = minQueueSize;
 			Op = op;
 			
-			foreach (var indiv in initializer())
+			foreach (var indiv in firstGeneration)
 			{
 				Queue.Enqueue(indiv);
 			}
