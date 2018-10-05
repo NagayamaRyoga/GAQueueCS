@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -10,23 +10,18 @@ namespace GAQueueCS
 	class Individual
 	{
 		public Gene Gene;
-		public double? Fitness = null;
-		public double? RawFitness = null;
-		public uint BirthYear = 0;
-		public Population Parents = new Population();
+		public double? Fitness { get; set; } = null;
+		public double? RawFitness { get; set; } = null;
+		public uint BirthYear { get; set; }
+		public Population Parents { get; } = new Population();
 
-		public Individual(int size, uint birthYear = 0, int? seed = null)
+		public Individual(int size, uint birthYear, Random rand)
 			: this(new Gene(), null, birthYear)
 		{
-			Random rand = new Random();
-			if (seed.HasValue)
-			{
-				rand = new Random(seed.Value);
-			}
 			Gene = Enumerable.Repeat(0.0, size).Select(_ => rand.NextDouble()).ToList();
 		}
 
-		public Individual(Gene gene, double? fitness, uint birthYear = 0)
+		public Individual(Gene gene, double? fitness, uint birthYear)
 		{
 			Gene = gene;
 			Fitness = fitness;

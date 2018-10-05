@@ -50,8 +50,8 @@ namespace GAQueueCS
 				  Operator op)
 			: this(geneSize, problem, minQueueSize, () =>
 				{
-					int seed = Environment.TickCount;
-					return Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize, 0, seed++));
+					Random rand = new Random();
+					return Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize, 0, rand));
 				}, op)
 		{
 		}
