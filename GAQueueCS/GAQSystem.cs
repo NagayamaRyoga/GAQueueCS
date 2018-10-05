@@ -35,13 +35,13 @@ namespace GAQueueCS
 		 * 		- mutate    function
  		 */
 
-		public List<Individual> History = new List<Individual>();
-		public Queue<Individual> Queue = new Queue<Individual>();
+		public List<Individual> History { get; } = new List<Individual>();
+		public Queue<Individual> Queue { get; } = new Queue<Individual>();
 		private uint age;
 		private int geneSize;
-		public IProblem Problem;
-		public int MinQueueSize;
-		public Operator Op;
+		public IProblem Problem { get; }
+		public int MinQueueSize { get; }
+		public Operator Op { get; }
 
 		public GAQSystem(int geneSize,
 				  IProblem problem,

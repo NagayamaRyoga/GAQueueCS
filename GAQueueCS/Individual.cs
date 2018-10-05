@@ -9,7 +9,7 @@ namespace GAQueueCS
 
 	class Individual
 	{
-		public Gene Gene;
+		public Gene Gene { get; }
 		public double? Fitness { get; set; } = null;
 		public double? RawFitness { get; set; } = null;
 		public uint BirthYear { get; set; }
