@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GAQueueCS
 {
 	delegate IEnumerable<Individual> Operator(IEnumerable<Individual> arg);
-	delegate double Evaluator(List<double> arg);
 	delegate IEnumerable<Individual> Initializer();
 
 	class GAQSystem
@@ -40,16 +39,16 @@ namespace GAQueueCS
 		public Queue<Individual> Queue = new Queue<Individual>();
 		private uint age;
 		private int geneSize;
-		public Evaluator Evaluator;
+		public IProblem Problem;
 		public int MinQueueSize;
 		public Operator Op;
 
 		public GAQSystem(int geneSize,
-				  Evaluator evaluator,
+				  IProblem problem,
 				  int minQueueSize,
 				  int initQueueSize,
 				  Operator op)
-			: this(geneSize, evaluator, minQueueSize, () =>
+			: this(geneSize, problem, minQueueSize, () =>
 				{
 					int seed = Environment.TickCount;
 					return Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize, 0, seed++));
@@ -58,13 +57,13 @@ namespace GAQueueCS
 		}
 
 		public GAQSystem(int geneSize,
-				  Evaluator evaluator,
+				  IProblem problem,
 				  int minQueueSize,
 				  Initializer initializer,
 				  Operator op)
 		{
 			this.geneSize = geneSize;
-			Evaluator = evaluator;
+			Problem = problem;
 			MinQueueSize = minQueueSize;
 			Op = op;
 			
@@ -94,17 +93,17 @@ namespace GAQueueCS
 			for (var i = 0; i < count; i++){
 				age++;
 				var indiv = PopQueue();
-				indiv.Fitness = Evaluator(indiv.Gene);
+				indiv.Fitness = Problem.Evaluate(indiv.Gene);
 				AddHistory(indiv);
 				SupplyQueue(age);
 			}
 		}
 
-		public void CalcRawFitness(Evaluator evaluator)
+		public void CalcRawFitness()
 		{
 			foreach (var indiv in History)
 			{
-				indiv.RawFitness = evaluator(indiv.Gene);
+				indiv.RawFitness = Problem.Evaluate(indiv.Gene);
 			}
 		}
 	}
