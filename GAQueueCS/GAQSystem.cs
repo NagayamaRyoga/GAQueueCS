@@ -34,45 +34,48 @@ namespace GAQueueCS
 		 * 		- mutate    function
  		 */
 
-		public List<Individual> History { get; } = new List<Individual>();
-		public Queue<Individual> Queue { get; } = new Queue<Individual>();
-		private uint age;
 		private int geneSize;
+		public IReadOnlyList<Individual> History
+		{
+			get => history;
+		}
+
 		public IProblem Problem { get; }
 		public int MinQueueSize { get; }
 		public Operator Op { get; }
 
+		private List<Individual> history { get; } = new List<Individual>();
+		private Queue<Individual> queue { get; }
+		private uint age;
+
 		public GAQSystem(int geneSize,
-				  IProblem problem,
-				  int minQueueSize,
-				  IEnumerable<Individual> firstGeneration,
-				  Operator op)
+			IProblem problem,
+			int minQueueSize,
+			IEnumerable<Individual> firstGeneration,
+			Operator op)
 		{
 			this.geneSize = geneSize;
 			Problem = problem;
 			MinQueueSize = minQueueSize;
 			Op = op;
-			
-			foreach (var indiv in firstGeneration)
-			{
-				Queue.Enqueue(indiv);
-			}
+			this.queue = new Queue<Individual>(firstGeneration);
+			age = 0;
 		}
 
-		public void AddHistory(Individual indiv) { History.Add(indiv); }
+		public void AddHistory(Individual indiv) { history.Add(indiv); }
 
 		public void SupplyQueue(uint age) {
-			if (Queue.Count() > MinQueueSize) return;
+			if (queue.Count() > MinQueueSize) return;
 			var population = Op(History);
 
 			foreach (var indiv in population)
 			{
 				indiv.BirthYear = age;
-				Queue.Enqueue(indiv);
+				queue.Enqueue(indiv);
 			}
 		}
 
-		public Individual PopQueue() { return Queue.Dequeue(); }
+		public Individual PopQueue() { return queue.Dequeue(); }
 
 		public void Step(int count = 1)
 		{
