@@ -30,9 +30,7 @@ namespace GAQueueCS
 
 		public override string ToString()
 		{
-			var ret = string.Format("{0:F3}/{1:F3} ", Fitness, RawFitness);
-			Gene.ForEach(g => ret += string.Format("{0:F3}, ", g));
-			return ret;
+			return $"{Fitness:F3}/{RawFitness:F3} {String.Join(", ", Gene.Select(g => $"{g:F3}"))}";
 		}
 	}
 }
