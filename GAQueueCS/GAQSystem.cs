@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GAQueueCS
 {
-	delegate IEnumerable<Individual> Operator(IEnumerable<Individual> arg);
+    using Operator = Func<IEnumerable<Individual>, IEnumerable<Individual>>;
 
 	class GAQSystem
 	{
@@ -41,15 +41,6 @@ namespace GAQueueCS
 		public IProblem Problem { get; }
 		public int MinQueueSize { get; }
 		public Operator Op { get; }
-
-		public GAQSystem(int geneSize,
-				  IProblem problem,
-				  int minQueueSize,
-				  int initQueueSize,
-				  Operator op)
-			: this(geneSize, problem, minQueueSize, Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize, 0, new Random())), op)
-		{
-		}
 
 		public GAQSystem(int geneSize,
 				  IProblem problem,

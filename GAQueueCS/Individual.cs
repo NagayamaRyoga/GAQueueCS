@@ -14,12 +14,6 @@ namespace GAQueueCS
 		public uint BirthYear { get; set; }
 		public Population Parents { get; } = new Population();
 
-		public Individual(int size, uint birthYear, Random rand)
-			: this(new Gene(), null, birthYear)
-		{
-			Gene = Gene.Randomized(size, rand);
-		}
-
 		public Individual(Gene gene, double? fitness, uint birthYear)
 		{
 			Gene = gene;
