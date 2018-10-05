@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace GAQueueCS
 {
-	using Gene       = List<double>;
 	using Population = List<Individual>;
 
 	class Individual
@@ -18,7 +17,7 @@ namespace GAQueueCS
 		public Individual(int size, uint birthYear, Random rand)
 			: this(new Gene(), null, birthYear)
 		{
-			Gene = Enumerable.Repeat(0.0, size).Select(_ => rand.NextDouble()).ToList();
+			Gene = Gene.Randomized(size, rand);
 		}
 
 		public Individual(Gene gene, double? fitness, uint birthYear)
@@ -30,7 +29,7 @@ namespace GAQueueCS
 
 		public override string ToString()
 		{
-			return $"{Fitness:F3}/{RawFitness:F3} {String.Join(", ", Gene.Select(g => $"{g:F3}"))}";
+			return $"{Fitness:F3}/{RawFitness:F3} {Gene}";
 		}
 	}
 }

@@ -88,7 +88,7 @@ namespace GAQueueCS
 			for (var i = 0; i < count; i++){
 				age++;
 				var indiv = PopQueue();
-				indiv.Fitness = Problem.Evaluate(indiv.Gene);
+				indiv.Fitness = Problem.Evaluate(indiv.Gene.Values);
 				AddHistory(indiv);
 				SupplyQueue(age);
 			}
@@ -98,7 +98,7 @@ namespace GAQueueCS
 		{
 			foreach (var indiv in History)
 			{
-				indiv.RawFitness = Problem.Evaluate(indiv.Gene);
+				indiv.RawFitness = Problem.Evaluate(indiv.Gene.Values);
 			}
 		}
 	}
