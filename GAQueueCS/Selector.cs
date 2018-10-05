@@ -12,7 +12,7 @@ namespace GAQueueCS
 	{
 		Operator Resize(int size)
 		{
-			return delegate (IEnumerable<Individual> arg)
+			return arg => 
 			{
 				return arg.Take(size);
 			};
@@ -20,7 +20,7 @@ namespace GAQueueCS
 
 		Operator Resize(float rate)
 		{
-			return delegate (IEnumerable<Individual> arg)
+			return arg =>
 			{
 				return arg.Take((int) Math.Floor(arg.Count() * rate));
 			};
@@ -28,7 +28,7 @@ namespace GAQueueCS
 
 		Operator Unique()
 		{
-			return delegate (IEnumerable<Individual> arg)
+			return arg =>
 			{
 				return arg.Distinct();
 			};
