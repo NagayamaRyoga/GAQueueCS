@@ -1,12 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GAQueueCS
 {
 	delegate IEnumerable<Individual> Operator(IEnumerable<Individual> arg);
-	delegate double Evaluator(List<double> arg);
-	delegate IEnumerable<Individual> Initializer();
 
 	class GAQSystem
 	{
@@ -36,39 +34,35 @@ namespace GAQueueCS
 		 * 		- mutate    function
  		 */
 
-		public List<Individual> History = new List<Individual>();
-		public Queue<Individual> Queue = new Queue<Individual>();
+		public List<Individual> History { get; } = new List<Individual>();
+		public Queue<Individual> Queue { get; } = new Queue<Individual>();
 		private uint age;
 		private int geneSize;
-		public Evaluator Evaluator;
-		public int MinQueueSize;
-		public Operator Op;
+		public IProblem Problem { get; }
+		public int MinQueueSize { get; }
+		public Operator Op { get; }
 
 		public GAQSystem(int geneSize,
-				  Evaluator evaluator,
+				  IProblem problem,
 				  int minQueueSize,
 				  int initQueueSize,
 				  Operator op)
-			: this(geneSize, evaluator, minQueueSize, () =>
-				{
-					int seed = Environment.TickCount;
-					return Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize, 0, seed++));
-				}, op)
+			: this(geneSize, problem, minQueueSize, Enumerable.Repeat(0, initQueueSize).Select(_ => new Individual(geneSize, 0, new Random())), op)
 		{
 		}
 
 		public GAQSystem(int geneSize,
-				  Evaluator evaluator,
+				  IProblem problem,
 				  int minQueueSize,
-				  Initializer initializer,
+				  IEnumerable<Individual> firstGeneration,
 				  Operator op)
 		{
 			this.geneSize = geneSize;
-			Evaluator = evaluator;
+			Problem = problem;
 			MinQueueSize = minQueueSize;
 			Op = op;
 			
-			foreach (var indiv in initializer())
+			foreach (var indiv in firstGeneration)
 			{
 				Queue.Enqueue(indiv);
 			}
@@ -94,17 +88,17 @@ namespace GAQueueCS
 			for (var i = 0; i < count; i++){
 				age++;
 				var indiv = PopQueue();
-				indiv.Fitness = Evaluator(indiv.Gene);
+				indiv.Fitness = Problem.Evaluate(indiv.Gene.Values);
 				AddHistory(indiv);
 				SupplyQueue(age);
 			}
 		}
 
-		public void CalcRawFitness(Evaluator evaluator)
+		public void CalcRawFitness()
 		{
 			foreach (var indiv in History)
 			{
-				indiv.RawFitness = evaluator(indiv.Gene);
+				indiv.RawFitness = Problem.Evaluate(indiv.Gene.Values);
 			}
 		}
 	}

@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GAQSystem.cs" />
+    <Compile Include="Gene.cs" />
     <Compile Include="Individual.cs" />
+    <Compile Include="IProblem.cs" />
     <Compile Include="Problem\Onemax\Onemax.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
