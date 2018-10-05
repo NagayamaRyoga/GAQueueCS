@@ -34,7 +34,6 @@ namespace GAQueueCS
 		 * 		- mutate    function
  		 */
 
-		private int geneSize;
 		public IReadOnlyList<Individual> History
 		{
 			get => history;
@@ -48,13 +47,11 @@ namespace GAQueueCS
 		private Queue<Individual> queue { get; }
 		private uint age;
 
-		public GAQSystem(int geneSize,
-			IProblem problem,
+		public GAQSystem(IProblem problem,
 			int minQueueSize,
 			IEnumerable<Individual> firstGeneration,
 			Operator op)
 		{
-			this.geneSize = geneSize;
 			Problem = problem;
 			MinQueueSize = minQueueSize;
 			Op = op;
