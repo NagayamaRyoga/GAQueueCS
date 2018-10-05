@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace GAQueueCS
 {
-	class Selector
+    using Operator = Func<IEnumerable<Individual>, IEnumerable<Individual>>;
+
+    class Selector
 	{
 		Operator Resize(int size)
 		{
