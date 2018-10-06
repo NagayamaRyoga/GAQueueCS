@@ -22,9 +22,9 @@ namespace GAQueueCS
 			return lhs.RawFitness.Value - rhs.RawFitness.Value;
 		}
 
-		public static double Recentness(Individual lhs, Individual rhs)
+		public static uint Recentness(Individual lhs, Individual rhs)
 		{
-			return lhs.BirthYear - rhs.BirthYear;
+			return lhs.BirthYear.Value - rhs.BirthYear.Value;
 		}
 	}
 }

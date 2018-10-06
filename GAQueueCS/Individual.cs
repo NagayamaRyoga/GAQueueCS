@@ -7,10 +7,10 @@ namespace GAQueueCS
 		public Gene Gene { get; }
 		public double? Fitness { get; set; } = null;
 		public double? RawFitness { get; set; } = null;
-		public uint BirthYear { get; set; }
+		public uint? BirthYear { get; set; }
 		public ISet<Individual> Parents { get; } = new HashSet<Individual>();
 
-		public Individual(Gene gene, double? fitness, uint birthYear)
+		public Individual(Gene gene, double? fitness = null, uint? birthYear = null)
 		{
 			Gene = gene;
 			Fitness = fitness;
