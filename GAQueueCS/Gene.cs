@@ -1,11 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GAQueueCS
 {
-	struct Gene
+	public struct Gene
 	{
 		public double[] Values { get; private set; }
+
+		public int Size { get { return Values.Count(); } }
 
 		public static Gene Randomized(int size, Random rand)
 		{
@@ -14,6 +17,23 @@ namespace GAQueueCS
 				Values = Enumerable.Range(0, size)
 					.Select(_ => rand.NextDouble())
 					.ToArray(),
+			};
+		}
+
+		public static Gene ZeroInitialized(int size)
+		{
+			return new Gene
+			{
+				Values = Enumerable.Repeat(0.0, size)
+					.ToArray(),
+			};
+		}
+
+		public static Gene ListInitialized(IEnumerable<double> arg)
+		{
+			return new Gene
+			{
+				Values = arg.ToArray()
 			};
 		}
 
