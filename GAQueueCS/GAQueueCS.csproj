@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparator.cs" />
+    <Compile Include="Crossoverer.cs" />
     <Compile Include="Selector.cs" />
     <Compile Include="GAQSystem.cs" />
     <Compile Include="Gene.cs" />
