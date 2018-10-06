@@ -6,41 +6,17 @@ using System.Threading.Tasks;
 
 namespace GAQueueCS
 {
-	using Operator = Func<IEnumerable<Individual>, IEnumerable<Individual>>;
-
-	class Selector
+    static class Selector
 	{
-		Operator Resize(int size)
+		public static IEnumerable<Individual> Take(this IEnumerable<Individual> arg, double rate)
 		{
-			return arg => 
-			{
-				return arg.Take(size);
-			};
-		}
-
-		Operator Resize(float rate)
-		{
-			return arg =>
-			{
-				return arg.Take((int) Math.Floor(arg.Count() * rate));
-			};
-		}
-
-		Operator Unique()
-		{
-			return arg =>
-			{
-				return arg.Distinct();
-			};
+			return arg.Take((int) Math.Floor(arg.Count() * rate));
 		}
 
 		/*
 		Operator crampCoefficientOfInbreeding(float maxCOI)
 		{
-			return delegate (IEnumerable<Individual> arg)
-			{
 
-			};
 		}
 		*/
 	}
