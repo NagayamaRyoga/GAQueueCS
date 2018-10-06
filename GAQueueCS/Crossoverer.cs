@@ -20,8 +20,16 @@ namespace GAQueueCS
 		{
 			return individual.Gene.Values.Count();
 		}
-
-		public static IEnumerable<Individual> REX<Individual>(this IEnumerable<Individual> parents)
+		
+		/**
+		 * g = Center of gravity(parents)
+		 * n = gene.size()
+		 * k = Choose any value. n/2 ~ 2n are fine.
+		 * n + k == parents.size() == children.size()
+		 * each \xi = dist(rand)
+		 * each child = g + \Sum_{i=1}^{n+k} (\xi_i * (parents_i - g))
+		 */
+		public static IEnumerable<Individual> REX(this IEnumerable<Individual> parents)
 		{
 			int n = parents.First().Gene.Values.Count();
 			int k = parents.Count() - n;
