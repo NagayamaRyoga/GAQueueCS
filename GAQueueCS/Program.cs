@@ -17,8 +17,8 @@ namespace GAQueueCS
 				.Select(_ => new Individual(Gene.Randomized(geneSize, rand), null, 0))
 				.ToArray();
 
-			var system = new GAQSystem(new Onemax(), 0, firstGeneration, arg => { return arg; });
-			system.Step(5);
+			var system = new GAQSystem(new Onemax(), 0, firstGeneration, arg => { return arg.REX(); });
+			system.Step(20);
 			foreach (var i in system.History)
 			{
 				Console.WriteLine(i);

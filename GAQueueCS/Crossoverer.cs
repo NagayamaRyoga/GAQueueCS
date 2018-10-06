@@ -29,22 +29,40 @@ namespace GAQueueCS
 		 * each \xi = dist(rand)
 		 * each child = g + \Sum_{i=1}^{n+k} (\xi_i * (parents_i - g))
 		 */
-		public static IEnumerable<Individual> REX(this IEnumerable<Individual> parents)
+		public static IEnumerable<Individual> REX(this IEnumerable<Individual> parents, int? childrenCount = null)
 		{
 			int n = parents.First().Gene.Values.Count();
 			int k = parents.Count() - n;
-			double[] gList = new double[n];
+			double[] g = new double[n];
 			for (var i = 0; i < n; i++)
 			{
-				gList[i] = parents
+				g[i] = parents
 					.Select(p => p.Gene.Values[i])
-					.Sum() / parents.Count();
+					.Average();
 			}
-			var g = Gene.ListInitialized(gList);
 
-			// todo
+			var rand = new Random();
+			var dist = Distribution.Uniform();
+			var children = new List<Individual>();
 
-			return parents;
+			for (var i = 0; i < childrenCount.GetValueOrDefault(n + k); i++)
+			{
+				double[] c = new double[n];
+				for (var j = 0; j < n; j++)
+				{
+					double sum;
+					do
+					{
+						sum = parents
+							.Select(p => (p.Gene.Values[j] - g[j]) * dist(rand))
+							.Sum();
+					} while (sum < 0 || sum > 1);
+					c[j] = sum;
+				}
+				children.Add(new Individual(Gene.ListInitialized(c)));
+			}
+
+			return children;
 		}
 	}
 }
