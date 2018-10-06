@@ -8,7 +8,7 @@ namespace GAQueueCS
 {
 	class Distribution
 	{
-		public Func<Random, double> Uniform(double mean, double stddev)
+		public static Func<Random, double> Uniform(double mean = 0, double stddev = 1)
 		{
 			double min = mean - Math.Sqrt(3 * stddev);
 			double max = mean + Math.Sqrt(3 * stddev);
@@ -21,7 +21,7 @@ namespace GAQueueCS
 
 		// https://stackoverflow.com/questions/218060/random-gaussian-variables
 		// Box-Muller transform
-		public Func<Random, double> Normal(double mean, double stddev)
+		public static Func<Random, double> Normal(double mean = 0, double stddev = 1)
 		{
 			return rand =>
 			{
