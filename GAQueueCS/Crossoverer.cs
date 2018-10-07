@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GAQueueCS.Distribution;
 
 namespace GAQueueCS
 {
-	using System.Collections;
-	using Operator = Func<IEnumerable<Individual>, IEnumerable<Individual>>;
-
 	static class Crossoverer
 	{
 		/*
@@ -42,10 +38,10 @@ namespace GAQueueCS
 			}
 
 			var rand = new Random();
-			var dist = Distribution.Uniform();
+			var dist = new UniformDistribution();
 			var children = new List<Individual>();
 
-			for (var i = 0; i < childrenCount.GetValueOrDefault(n + k); i++)
+			for (var i = 0; i < (childrenCount ?? n + k); i++)
 			{
 				double[] c = new double[n];
 				for (var j = 0; j < n; j++)
@@ -54,7 +50,7 @@ namespace GAQueueCS
 					do
 					{
 						sum = parents
-							.Select(p => (p.Gene.Values[j] - g[j]) * dist(rand))
+							.Select(p => (p.Gene.Values[j] - g[j]) * dist.Sample(rand))
 							.Sum();
 					} while (sum < 0 || sum > 1);
 					c[j] = sum;
