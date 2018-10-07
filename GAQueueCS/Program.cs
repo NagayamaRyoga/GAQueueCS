@@ -26,7 +26,7 @@ namespace GAQueueCS
 			};
 
 			var system = new GAQSystem(new Onemax(), 0, firstGeneration, op);
-			system.Step(20);
+			system.Step(100);
 			foreach (var i in system.History)
 			{
 				Console.WriteLine(i);
