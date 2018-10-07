@@ -4,10 +4,11 @@ namespace GAQueueCS
 {
 	class Distribution
 	{
-		public static Func<Random, double> Uniform(double mean = 0, double stddev = 1)
+		public static Func<Random, double> Uniform(double mean = 0, double stddev = 3)
 		{
-			double min = mean - Math.Sqrt(3 * stddev);
-			double max = mean + Math.Sqrt(3 * stddev);
+			// mean == (min + max) / 2, stddev == Math.Sqrt((max - min) / 12)
+			double min = mean - 6 * Math.Pow(stddev, 2);
+			double max = mean + 6 * Math.Pow(stddev, 2);
 
 			return rand => min + (max - min) * rand.NextDouble();
 		}
