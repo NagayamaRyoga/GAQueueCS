@@ -59,8 +59,7 @@ namespace GAQueueCS
 						{
 							if (oneOfMyFamily != oneOfOthersFamily) continue;
 							var coi = Math.Pow(0.5, myDepth) + Math.Pow(0.5, othersDepth);
-							if (ans.HasValue) ans = Math.Min(ans.Value, coi);
-							else ans = coi;
+							ans = ans < coi ? ans : coi;
 						}
 					}
 				}
