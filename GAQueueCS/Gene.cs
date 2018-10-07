@@ -8,7 +8,7 @@ namespace GAQueueCS
 	{
 		public double[] Values { get; private set; }
 
-		public int Size { get { return Values.Count(); } }
+		public int Count => Values.Count();
 
 		public static Gene Randomized(int size, Random rand)
 		{
