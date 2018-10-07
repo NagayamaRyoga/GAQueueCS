@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using GAQueueCS.Problem.Onemax;
 
@@ -17,7 +18,14 @@ namespace GAQueueCS
 				.Select(_ => new Individual(Gene.Randomized(geneSize, rand), null, 0))
 				.ToArray();
 
-			var system = new GAQSystem(new Onemax(), 0, firstGeneration, arg => { return arg.REX(); });
+			Func<IEnumerable<Individual>, IEnumerable<Individual>> op = arg => 
+			{
+				return arg.OrderByDescending(indiv => indiv.Fitness)
+					.Take(2)
+					.REX(5);
+			};
+
+			var system = new GAQSystem(new Onemax(), 0, firstGeneration, op);
 			system.Step(20);
 			foreach (var i in system.History)
 			{
