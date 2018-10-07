@@ -21,6 +21,7 @@ namespace GAQueueCS
 			Func<IEnumerable<Individual>, IEnumerable<Individual>> op = arg => 
 			{
 				return arg.OrderByDescending(indiv => indiv.Fitness)
+					.CrampMinCoefficientOfInbreeding(0.2)
 					.Take(2)
 					.REX(5);
 			};
