@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GAQueueCS
 {
@@ -12,11 +8,8 @@ namespace GAQueueCS
 		{
 			double min = mean - Math.Sqrt(3 * stddev);
 			double max = mean + Math.Sqrt(3 * stddev);
-			double gap = max - mean;
-			return rand =>
-			{
-				return min + gap * rand.NextDouble();
-			};
+
+			return rand => min + (max - min) * rand.NextDouble();
 		}
 
 		// https://stackoverflow.com/questions/218060/random-gaussian-variables
