@@ -41,7 +41,7 @@ namespace GAQueueCS
 					{
 						sum = parents
 							.Select(p => (p.Gene.Values[j] - g[j]) * dist.Sample(rand))
-							.Sum();
+							.Sum() + g[j];
 					} while (sum < 0 || sum > 1);
 					c[j] = sum;
 				}
