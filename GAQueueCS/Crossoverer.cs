@@ -7,16 +7,6 @@ namespace GAQueueCS
 {
 	static class Crossoverer
 	{
-		/*
-		Operator rex(const Distribution<float, std::mt19937>& dist);
-		Operator rex(const Distribution<float, std::mt19937>& dist, std::size_t outputNum);
-		*/
-
-		static int Hoge(Individual individual)
-		{
-			return individual.Gene.Values.Count();
-		}
-		
 		/**
 		 * g = Center of gravity(parents)
 		 * n = gene.size()
