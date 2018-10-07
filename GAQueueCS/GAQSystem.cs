@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GAQueueCS
 {
-    using Operator = Func<IEnumerable<Individual>, IEnumerable<Individual>>;
+	using Operator = Func<IEnumerable<Individual>, IEnumerable<Individual>>;
 
 	class GAQSystem
 	{
@@ -34,10 +34,7 @@ namespace GAQueueCS
 		 * 		- mutate    function
  		 */
 
-		public IReadOnlyList<Individual> History
-		{
-			get => history;
-		}
+		public IReadOnlyList<Individual> History => history;
 
 		public IProblem Problem { get; }
 		public int MinQueueSize { get; }
@@ -45,7 +42,7 @@ namespace GAQueueCS
 
 		private List<Individual> history { get; } = new List<Individual>();
 		private Queue<Individual> queue { get; }
-		private uint age;
+		private uint age = 0;
 
 		public GAQSystem(IProblem problem,
 			int minQueueSize,
@@ -55,11 +52,8 @@ namespace GAQueueCS
 			Problem = problem;
 			MinQueueSize = minQueueSize;
 			Op = op;
-			this.queue = new Queue<Individual>(firstGeneration);
-			age = 0;
+			queue = new Queue<Individual>(firstGeneration);
 		}
-
-		public void AddHistory(Individual indiv) { history.Add(indiv); }
 
 		public void SupplyQueue(uint age) {
 			if (queue.Count() > MinQueueSize) return;
@@ -72,15 +66,13 @@ namespace GAQueueCS
 			}
 		}
 
-		public Individual PopQueue() { return queue.Dequeue(); }
-
 		public void Step(int count = 1)
 		{
 			for (var i = 0; i < count; i++){
 				age++;
-				var indiv = PopQueue();
+				var indiv = queue.Dequeue();
 				indiv.Fitness = Problem.Evaluate(indiv.Gene.Values);
-				AddHistory(indiv);
+				history.Add(indiv);
 				SupplyQueue(age);
 			}
 		}
