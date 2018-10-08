@@ -8,7 +8,8 @@ namespace GAQueueCS
 	{
 		public static IEnumerable<Individual> Reduce(this IEnumerable<Individual> arg, double rate)
 		{
-			return arg.Take((int) Math.Floor(arg.Count() * rate));
+			var ans = arg.ToList();
+			return ans.Take((int) Math.Floor(ans.Count() * rate));
 		}
 
 		public static IEnumerable<Individual> CrampMinCoefficientOfInbreeding(this IEnumerable<Individual> arg, double minCOI)
@@ -21,7 +22,30 @@ namespace GAQueueCS
 				bool flag = true;
 				foreach (var i in ans)
 				{
-					if (indiv.CalcCoefficientOfInbreeding(i, maxDepth) < minCOI)
+					var coi = indiv.CalcCoefficientOfInbreeding(i, maxDepth);
+					if (!coi.HasValue || coi <= minCOI)
+					{
+						flag = false;
+						break;
+					}
+				}
+				if (flag) ans.Add(indiv);
+			}
+
+			return ans;
+		}
+
+		public static IEnumerable<Individual> CrampMaxCoefficientOfInbreeding(this IEnumerable<Individual> arg, double maxCOI)
+		{
+			var ans = new List<Individual>();
+			int maxDepth = (int) -Math.Ceiling(Math.Log(maxCOI / 2) / Math.Log(2));
+
+			foreach (var indiv in arg)
+			{
+				bool flag = true;
+				foreach (var i in ans)
+				{
+					if (indiv.CalcCoefficientOfInbreeding(i, maxDepth) >= maxCOI)
 					{
 						flag = false;
 						break;
