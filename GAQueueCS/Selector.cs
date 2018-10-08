@@ -10,6 +10,14 @@ namespace GAQueueCS
 		{
 			return arg.OrderBy(_ => Guid.NewGuid());
 		}
+
+		public static IEnumerable<T> TakeAccurately<T>(this IEnumerable<T> arg, int count)
+		{
+			if (arg.Count() < count) throw new ArgumentOutOfRangeException();
+			var ans = arg.ToList();
+			return ans.Take(count);
+		}
+
 		public static IEnumerable<Individual> Reduce(this IEnumerable<Individual> arg, double rate)
 		{
 			var ans = arg.ToList();
