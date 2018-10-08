@@ -79,7 +79,7 @@ namespace GAQueueCS
 
 		public override string ToString()
 		{
-			return $"{Fitness:F3}/{RawFitness:F3} {Gene}";
+			return $"{Fitness:F3}/{RawFitness:F3}({BirthYear}) {Gene}";
 		}
 	}
 }

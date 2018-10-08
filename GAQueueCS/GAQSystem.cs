@@ -57,9 +57,9 @@ namespace GAQueueCS
 
 		public void SupplyQueue(uint age) {
 			if (queue.Count() > MinQueueSize) return;
-			var population = Op(History);
+			var newGeneration = Op(History);
 
-			foreach (var indiv in population)
+			foreach (var indiv in newGeneration)
 			{
 				indiv.BirthYear = age;
 				queue.Enqueue(indiv);

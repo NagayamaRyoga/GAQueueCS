@@ -57,15 +57,13 @@ namespace GAQueueCS
 			}
 
 			var system = new GAQSystem(new Onemax(), 0, firstGeneration, op);
-			system.Step(200);
+			system.Step(20);
 			system.CalcRawFitness(new Onemax());
-			foreach (var i in system.History)
-			{
-				//Console.WriteLine(i);
-			}
-			system.History.OrderByDescending(indiv => indiv.BirthYear);
+			Console.WriteLine();
+			foreach (var i in system.History.OrderBy(indiv => indiv.Fitness)) Console.WriteLine(i);
 
-			PrintFamilyTree(system.History.Last(), new HashSet<Individual>());
+			//foreach (var i in system.History) PrintFamilyTree(system.History.Last(), new HashSet<Individual>());
+			PrintFamilyTree(system.History.OrderBy(i => i.Fitness).Last(), new HashSet<Individual>());
 		}
 	}
 }
