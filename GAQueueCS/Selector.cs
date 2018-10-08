@@ -6,6 +6,10 @@ namespace GAQueueCS
 {
     static class Selector
 	{
+		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> arg)
+		{
+			return arg.OrderBy(_ => Guid.NewGuid());
+		}
 		public static IEnumerable<Individual> Reduce(this IEnumerable<Individual> arg, double rate)
 		{
 			var ans = arg.ToList();
