@@ -77,11 +77,11 @@ namespace GAQueueCS
 			}
 		}
 
-		public void CalcRawFitness()
+		public void CalcRawFitness(IProblem problem)
 		{
 			foreach (var indiv in History)
 			{
-				indiv.RawFitness = Problem.Evaluate(indiv.Gene.Values);
+				indiv.RawFitness = problem.Evaluate(indiv.Gene.Values);
 			}
 		}
 	}

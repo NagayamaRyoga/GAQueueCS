@@ -50,5 +50,17 @@ namespace GAQueueCS
 
 			return children;
 		}
+
+		public static IEnumerable<Individual> RememberParents(this IEnumerable<Individual> arg,
+															  Func<IEnumerable<Individual>, IEnumerable<Individual>> f)
+		{
+			var argCopy = arg.ToList();
+			var children = f(arg);
+			foreach (var child in children)
+			{
+				child.Parents = argCopy;
+			}
+			return children;
+		}
 	}
 }
