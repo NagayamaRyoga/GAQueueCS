@@ -46,15 +46,15 @@ namespace GAQueueCS
 				.Select(_ => new Individual(Gene.Randomized(geneSize, rand), null, 0))
 				.ToArray();
 
-			Func<IEnumerable<Individual>, IEnumerable<Individual>> op = arg => 
+			IEnumerable<Individual> op(IEnumerable<Individual> arg)
 			{
-				return arg.ToList()
-					//.CrampMaxCoefficientOfInbreeding(0.2)
-					.CrampMinCoefficientOfInbreeding(0.05)
+				return arg
 					.OrderByDescending(indiv => indiv.Fitness)
-					.Take(2)
-					.RememberParents(hoge => hoge.REX(5));
-			};
+					//.CrampMinCoefficientOfInbreeding(minCOI: 0.1, minCount: 2)
+					.CrampMaxCoefficientOfInbreeding(maxCOI: 0.2, minCount: 2)
+					.TakeAccurately(2)
+					.RememberParents(hoge => hoge.REX(rand, 5));
+			}
 
 			var system = new GAQSystem(new Onemax(), 0, firstGeneration, op);
 			system.Step(200);

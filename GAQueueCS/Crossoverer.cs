@@ -15,7 +15,7 @@ namespace GAQueueCS
 		 * each \xi = dist(rand)
 		 * each child = g + \Sum_{i=1}^{n+k} (\xi_i * (parents_i - g))
 		 */
-		public static IEnumerable<Individual> REX(this IEnumerable<Individual> parents, int? childrenCount = null)
+		public static IEnumerable<Individual> REX(this IEnumerable<Individual> parents, Random rand, int? childrenCount = null)
 		{
 			int n = parents.First().Gene.Values.Count();
 			int k = parents.Count() - n;
@@ -27,8 +27,8 @@ namespace GAQueueCS
 					.Average();
 			}
 
-			var rand = new Random();
 			var dist = new NormalDistribution { Mean = 0, StdDev = 1.0 / (n + k) };
+			//var dist = new UniformDistribution { Min = -3.0 / (n + k), Max = 3.0 / (n + k) };
 			var children = new List<Individual>();
 
 			for (var i = 0; i < (childrenCount ?? n + k); i++)
