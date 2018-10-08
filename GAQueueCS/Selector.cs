@@ -24,7 +24,7 @@ namespace GAQueueCS
 			return ans.Take((int) Math.Floor(ans.Count() * rate));
 		}
 
-		public static IEnumerable<Individual> CrampMinCoefficientOfInbreeding(this IEnumerable<Individual> arg, double minCOI)
+		public static IEnumerable<Individual> CrampMinCoefficientOfInbreeding(this IEnumerable<Individual> arg, double minCOI, int minCount)
 		{
 			var ans = new List<Individual>();
 			int maxDepth = (int) -Math.Ceiling(Math.Log(minCOI / 2) / Math.Log(2));
@@ -44,10 +44,16 @@ namespace GAQueueCS
 				if (flag) ans.Add(indiv);
 			}
 
+			//Console.WriteLine($"cramp {arg.Count()}=>{ans.Count()}");
+
+			if (ans.Count() < minCount) return arg;
+			//foreach (var i in ans) Console.WriteLine(i);
+			//Console.WriteLine();
+
 			return ans;
 		}
 
-		public static IEnumerable<Individual> CrampMaxCoefficientOfInbreeding(this IEnumerable<Individual> arg, double maxCOI)
+		public static IEnumerable<Individual> CrampMaxCoefficientOfInbreeding(this IEnumerable<Individual> arg, double maxCOI, int minCount)
 		{
 			var ans = new List<Individual>();
 			int maxDepth = (int) -Math.Ceiling(Math.Log(maxCOI / 2) / Math.Log(2));
@@ -57,7 +63,7 @@ namespace GAQueueCS
 				bool flag = true;
 				foreach (var i in ans)
 				{
-					if (indiv.CalcCoefficientOfInbreeding(i, maxDepth) >= maxCOI)
+					if (indiv.CalcCoefficientOfInbreeding(i, maxDepth) > maxCOI)
 					{
 						flag = false;
 						break;
@@ -65,6 +71,12 @@ namespace GAQueueCS
 				}
 				if (flag) ans.Add(indiv);
 			}
+
+			//Console.WriteLine($"cramp {arg.Count()}=>{ans.Count()}");
+
+			if (ans.Count() < minCount) return arg;
+			//foreach (var i in ans) Console.WriteLine(i);
+			//Console.WriteLine();
 
 			return ans;
 		}
