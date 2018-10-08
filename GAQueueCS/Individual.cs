@@ -19,6 +19,10 @@ namespace GAQueueCS
 			BirthYear = birthYear;
 		}
 
+		/**
+		 * coefficient of inbreeding
+		 * https://en.wikipedia.org/wiki/Coefficient_of_inbreeding
+		 */
 		public double? CalcCoefficientOfInbreeding(Individual other, int maxDepth)
 		{
 			if (CoefficientsOfInbreeding.ContainsKey(other)){
@@ -29,6 +33,7 @@ namespace GAQueueCS
 			List<Individual>[] othersFamily = new List<Individual>[maxDepth + 1];
 			myFamily[0] = new List<Individual> { this };
 			othersFamily[0] = new List<Individual> { other };
+			int parentCount = (Parents as List<Individual>).Count;
 
 			for (int depth = 1; depth <= maxDepth; depth++)
 			{
@@ -49,16 +54,17 @@ namespace GAQueueCS
 
 			double? ans = null;
 
-			for (int myDepth = 1; myDepth <= maxDepth; myDepth++)
+			for (int myDepth = 0; myDepth <= maxDepth; myDepth++)
 			{
-				for (int othersDepth = 1; othersDepth <= maxDepth; othersDepth++)
+				for (int othersDepth = 0; othersDepth <= maxDepth; othersDepth++)
 				{
 					foreach (var oneOfMyFamily in myFamily[myDepth])
 					{
 						foreach (var oneOfOthersFamily in othersFamily[othersDepth])
 						{
 							if (oneOfMyFamily != oneOfOthersFamily) continue;
-							var coi = Math.Pow(0.5, myDepth) + Math.Pow(0.5, othersDepth);
+							var coi = Math.Pow(1.0 / parentCount, myDepth) +
+							          Math.Pow(1.0 / parentCount, othersDepth);
 							ans = ans < coi ? ans : coi;
 						}
 					}
