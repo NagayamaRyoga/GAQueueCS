@@ -24,7 +24,7 @@ namespace GAQueueCS
 			return ans.Take((int) Math.Floor(ans.Count() * rate));
 		}
 
-		public static IEnumerable<Individual> CrampMinCoefficientOfInbreeding(this IEnumerable<Individual> arg, double minCOI, int minCount)
+		public static IEnumerable<Individual> ClampMinCoefficientOfInbreeding(this IEnumerable<Individual> arg, double minCOI, int minCount)
 		{
 			var ans = new List<Individual>();
 			int maxDepth = (int) -Math.Ceiling(Math.Log(minCOI / 2) / Math.Log(2));
@@ -53,7 +53,7 @@ namespace GAQueueCS
 			return ans;
 		}
 
-		public static IEnumerable<Individual> CrampMaxCoefficientOfInbreeding(this IEnumerable<Individual> arg, double maxCOI, int minCount)
+		public static IEnumerable<Individual> ClampMaxCoefficientOfInbreeding(this IEnumerable<Individual> arg, double maxCOI, int minCount)
 		{
 			var ans = new List<Individual>();
 			int maxDepth = (int) -Math.Ceiling(Math.Log(maxCOI / 2) / Math.Log(2));

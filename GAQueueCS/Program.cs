@@ -50,8 +50,8 @@ namespace GAQueueCS
 			{
 				return arg
 					.OrderByDescending(indiv => indiv.Fitness)
-					//.CrampMinCoefficientOfInbreeding(minCOI: 0.1, minCount: 2)
-					.CrampMaxCoefficientOfInbreeding(maxCOI: 0.2, minCount: 2)
+					//.ClampMinCoefficientOfInbreeding(minCOI: 0.1, minCount: 2)
+					.ClampMaxCoefficientOfInbreeding(maxCOI: 0.2, minCount: 2)
 					.TakeAccurately(2)
 					.RememberParents(hoge => hoge.REX(rand, 5));
 			}
